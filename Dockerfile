@@ -17,11 +17,6 @@ RUN npm run build
 # production image
 FROM node:14-buster-slim
 
-# Make it possible to override the UID/GID/username of the user running scanservjs
-ARG UID=2001
-ARG GID=2001
-ARG UNAME=scanservjs
-
 ENV APP_DIR=/app
 WORKDIR "$APP_DIR"
 RUN apt-get update \
@@ -47,10 +42,6 @@ RUN apt-get update \
     /etc/ImageMagick-6/policy.xml \
   && npm install -g npm@7.11.2
 
-# Create a known user
-RUN groupadd -g $GID -o $UNAME
-RUN useradd -o -u $UID -g $GID -m -s /bin/bash $UNAME
-
 ENV \
   # This goes into /etc/sane.d/net.conf
   SANED_NET_HOSTS="" \
@@ -71,9 +62,5 @@ ENTRYPOINT [ "/run.sh" ]
 # Copy the code and install
 COPY --from=builder "$APP_DIR/dist" "$APP_DIR/"
 RUN npm install --production
-
-# Change the ownership of config and data since we need to write there
-RUN chown -R $UID:$GID config data /etc/sane.d/net.conf /etc/sane.d/airscan.conf
-USER $UNAME
 
 EXPOSE 8080
