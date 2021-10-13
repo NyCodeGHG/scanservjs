@@ -34,7 +34,7 @@ class Config {
         }
       },
       filename() {
-        return `scan_${dayjs().format('YYYY-MM-DD HH.mm.ss')}`;
+        return `Scan_${dayjs().format('YYYY-MM-DD_HH-mm-ss')}`;
       },
     
       scanimage: '/usr/bin/scanimage',
