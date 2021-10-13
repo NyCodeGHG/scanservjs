@@ -11,6 +11,10 @@
 
 Copyright 2016-2021 [Sam Strachan](https://github.com/sbs20)
 
+## Why this fork?
+
+This fork fixes some issues regarding HP printers.
+
 ## What people are saying
 
 > I've decided to switch to using only this, I find using this in a browser is
