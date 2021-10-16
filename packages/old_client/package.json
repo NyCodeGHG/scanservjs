@@ -1,0 +1,54 @@
+{
+  "name": "scanservjs",
+  "version": "2.18.0",
+  "description": "scanservjs is a simple web-based UI for SANE which allows you to share a scanner on a network without the need for drivers or complicated installation.",
+  "author": "Sam Strachan",
+  "scripts": {
+    "serve": "nodemon --exec 'vue-cli-service serve'",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
+  },
+  "main": "server/server.js",
+  "dependencies": {
+    "@mdi/font": "^6.2.95",
+    "core-js": "^3.18.3",
+    "vue": "^2.6.14",
+    "vue-i18n": "^8.26.5",
+    "vue-router": "^3.5.2",
+    "vuetify": "^2.5.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.14",
+    "@vue/cli-plugin-eslint": "~4.5.14",
+    "@vue/cli-service": "~4.5.14",
+    "babel-eslint": "^10.1.0",
+    "deepmerge": "^4.2.2",
+    "eslint": "^8.0.1",
+    "eslint-plugin-vue": "^7.19.1",
+    "nodemon": "^2.0.13",
+    "sass": "^1.43.2",
+    "sass-loader": "^12.2.0",
+    "vue-advanced-cropper": "1.8.2",
+    "vue-cli-plugin-i18n": "~2.3.1",
+    "vue-cli-plugin-vuetify": "~2.4.3",
+    "vue-template-compiler": "^2.6.14",
+    "vue-toastr": "^2.1.2",
+    "vuetify-loader": "^1.7.3"
+  },
+  "browserslist": [
+    "> 0.2%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "license": "GPL-2.0",
+  "nodemonConfig": {
+    "watch": [
+      "../server/src"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sbs20/scanservjs"
+  }
+}
