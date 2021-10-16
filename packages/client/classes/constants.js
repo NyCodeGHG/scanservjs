@@ -27,10 +27,9 @@ const Constants = {
     'it',
     'nl',
     'pl',
-    'pt',
     'pt-BR',
     'ru',
-    'tr',
+    'pt',
     'zh',
     'test'
   ],
