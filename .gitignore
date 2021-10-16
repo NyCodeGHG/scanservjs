@@ -100,3 +100,6 @@ dist
 **/scan*.jpg
 **/config.local.js
 var
+
+# Old Client
+packages/old_client
