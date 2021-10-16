@@ -1,54 +1,30 @@
 {
-  "name": "scanservjs",
-  "version": "2.18.0",
-  "description": "scanservjs is a simple web-based UI for SANE which allows you to share a scanner on a network without the need for drivers or complicated installation.",
-  "author": "Sam Strachan",
+  "name": "client",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "serve": "nodemon --exec 'vue-cli-service serve'",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
+    "lint": "yarn lint:js"
   },
-  "main": "server/server.js",
   "dependencies": {
-    "@mdi/font": "^5.9.55",
-    "core-js": "^3.11.2",
-    "vue": "^2.6.12",
-    "vue-i18n": "^8.24.4",
-    "vue-router": "^3.5.1",
-    "vuetify": "^2.4.11"
+    "@nuxtjs/axios": "^5.13.6",
+    "core-js": "^3.15.1",
+    "nuxt": "^2.15.7",
+    "vuetify": "^2.5.5"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "deepmerge": "^4.2.2",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "nodemon": "^2.0.7",
-    "sass": "^1.32.12",
-    "sass-loader": "^10.0.2",
-    "vue-advanced-cropper": "0.16.10",
-    "vue-cli-plugin-i18n": "~2.1.0",
-    "vue-cli-plugin-vuetify": "~2.4.0",
-    "vue-template-compiler": "^2.6.12",
-    "vue-toastr": "^2.1.2",
-    "vuetify-loader": "^1.7.2"
-  },
-  "browserslist": [
-    "> 0.2%",
-    "last 2 versions",
-    "not dead"
-  ],
-  "license": "GPL-2.0",
-  "nodemonConfig": {
-    "watch": [
-      "../server/src"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sbs20/scanservjs"
+    "@babel/eslint-parser": "^7.14.7",
+    "@nuxt/types": "^2.15.7",
+    "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/eslint-config-typescript": "^6.0.1",
+    "@nuxtjs/eslint-module": "^3.0.2",
+    "@nuxtjs/vuetify": "^1.12.1",
+    "eslint": "^7.29.0",
+    "eslint-plugin-nuxt": "^2.0.0",
+    "eslint-plugin-vue": "^7.12.1"
   }
 }
