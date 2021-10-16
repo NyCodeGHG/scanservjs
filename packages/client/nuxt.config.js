@@ -47,7 +47,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/i18n'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -69,6 +70,61 @@ export default {
           success: colors.green.accent3
         }
       }
+    }
+  },
+
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        file: 'en.json'
+      },
+      {
+        code: 'cs',
+        file: 'cs.json'
+      },
+      {
+        code: 'de',
+        file: 'de.json'
+      },
+      {
+        code: 'es',
+        file: 'es.json'
+      },
+      {
+        code: 'fr',
+        file: 'fr.json'
+      },
+      {
+        code: 'it',
+        file: 'it.json'
+      },
+      {
+        code: 'nl',
+        file: 'nl.json'
+      },
+      {
+        code: 'pl',
+        file: 'pl.json'
+      },
+      {
+        code: 'pt',
+        file: 'pt-BR.json'
+      },
+      {
+        code: 'ru',
+        file: 'ru.json'
+      },
+      {
+        code: 'zh',
+        file: 'zh.json'
+      }
+    ],
+    lazy: true,
+    langDir: 'lang/',
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en'
     }
   },
 

@@ -1,117 +1,118 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-    </v-app-bar>
+  <v-app>
+    <toastr ref="toastr"></toastr>
+
+    <transition name="fade">
+      <div v-if="maskRef" id="mask">
+        <div style="position: absolute; top: 49%; left: 49%">
+          <v-progress-circular indeterminate color="primary" />
+        </div>
+      </div>
+    </transition>
+
+    <navigation :appColor="appColor"></navigation>
+
     <v-main>
-      <v-container>
-        <Nuxt />
+      <v-container fluid>
+        <transition name="fade" mode="out-in" :duration="150">
+          <router-view @mask="mask" @notify="notify"></router-view>
+        </transition>
       </v-container>
     </v-main>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer
-      :absolute="!fixed"
-      app
-    >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
 <script>
+import Toastr from 'vue-toastr';
+
+import Constants from '~/classes/constants';
+import Storage from '~/classes/storage';
+import Navigation from '~/components/Navigation';
+
+const storage = Storage.instance();
+
 export default {
-  data () {
+  name: 'App',
+  components: {
+    Navigation,
+    Toastr
+  },
+
+  data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      maskRef: 0,
+      appColor: storage.settings.appColor
+    };
+  },
+
+  mounted() {
+    let theme = storage.settings.theme;
+    if (theme === Constants.Themes.System) {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? Constants.Themes.Dark
+        : Constants.Themes.Light;
+    }
+    this.$vuetify.theme.dark = theme === Constants.Themes.Dark;
+
+    this.$i18n.locale = storage.settings.locale;
+
+    // Default route if connected
+    if (this.$route.matched.length === 0) {
+      this.$router.replace('/scan');
+    }
+  },
+
+  methods: {
+    mask(add) {
+      this.maskRef += add;
+    },
+
+    notify(notification) {
+      const types = {
+        's': 'success',
+        'i': 'info',
+        'e': 'error'
+      };
+
+      const timeout = notification.type === 'e' ? 10000 : 2000;
+      this.$refs.toastr.Add({
+        type: types[notification.type],
+        position: 'toast-bottom-right',
+        msg: notification.message,
+        timeout: timeout,
+        progressbar: false
+      });
     }
   }
-}
+};
 </script>
+
+<style>
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield; /* Firefox */
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+#mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.4);
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+</style>
