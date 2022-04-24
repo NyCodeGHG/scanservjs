@@ -147,7 +147,7 @@ export default {
     fileList() {
       this.$emit('mask', 1);
       Common.fetch('files').then(files => {
-        this.files = files;
+        this.files = files.filter(file => !file.name.startsWith('.'));
         this.$emit('mask', -1);
       }).catch(error => {
         this.$emit('notify', {type: 'e', message: error});
